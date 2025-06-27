@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="initial-scale=1.0, user-scalable=no, width=device-width"
+    />
+    <title>HELLO，AMAP!</title>
+    <style>
+      html,
+      body,
+      #container {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script type="text/javascript">
+      window._AMapSecurityConfig = {
+        securityJsCode: "bae28b8606d4cb6635276eacf6cb22f1",
+      };
+    </script>
+    <script src="https://webapi.amap.com/loader.js"></script>
+    <script type="text/javascript">
+      AMapLoader.load({
+        key: "c2c436f0e314b3a8fa693fc9736f33e8", //申请好的Web端开发者 Key，调用 load 时必填
+        version: "2.0", //指定要加载的 JS API 的版本，缺省时默认为 1.4.15
+        plugins: ['AMap.Terrain'],
+      })
+        .then((AMap) => {
+          const map = new AMap.Map("container",{viewMode:"3D",pitch:2,zoom : 6,mapStyle:"amap://styles/macaron"}); 
+
+          const mountains = [
+            {
+              name: "峨眉山",
+              position: [103.339087, 29.5472], //经纬度
+              height: 3079, //海拔高度
+            },
+            {
+              name: "泰山",
+              position: [117.129063, 36.198974],
+              height: 1545,
+            },
+            {
+              name: "华山",
+              position: [110.0954, 34.4998],
+              height: 2154,
+            },
+        ]; //山脉数据数组
+          mountains.forEach
+            (function(mountain){
+            const marker = new AMap.Marker(
+              {
+                position: mountain.position, //设置标记的经纬度位置
+                title: mountain.name, //设置标记的标题
+                height : mountain.height, //设置标记的高度
+              } 
+            );
+            map.add(marker);
+          });
+          // 这两部分代码在吗？
+      }).catch((e) => {
+          console.error(e); //加载错误提示
+        });
+    </script>
+  </body>
+</html>
