@@ -1,71 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="initial-scale=1.0, user-scalable=no, width=device-width"
-    />
-    <title>HELLO，AMAP!</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <title>我的登峰日志 v0.0.02</title>
     <style>
-      html,
-      body,
-      #container {
-        width: 100%;
-        height: 100%;
-      }
+      /* 样式保持不变 */
+      html, body, #container { width: 100%; height: 100%; margin: 0; padding: 0; font-family: sans-serif; }
+      .sidebar { position: absolute; top: 20px; left: 20px; width: 220px; background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10; max-height: 80%; overflow-y: auto; }
+      .sidebar h2 { margin-top: 0; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+      .sidebar ul { list-style: none; padding: 0; margin: 0; }
+      .sidebar li { padding: 8px 0; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
+      .sidebar li:hover { background-color: #f0f8ff; }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div id="container"></div>
+    <div class="sidebar">
+        <h2>我的登峰日志</h2>
+        <ul id="mountain-list"></ul>
+    </div>
+
+    <!-- 高德地图安全密钥 -->
     <script type="text/javascript">
       window._AMapSecurityConfig = {
-        securityJsCode: "bae28b8606d4cb6635276eacf6cb22f1",
+        securityJsCode: "bae28b8606d4cb6635276eacf6cb22f1", // 你的安全密钥
       };
     </script>
-    <script src="https://webapi.amap.com/loader.js"></script>
-    <script type="text/javascript">
-      AMapLoader.load({
-        key: "c2c436f0e314b3a8fa693fc9736f33e8", //申请好的Web端开发者 Key，调用 load 时必填
-        version: "2.0", //指定要加载的 JS API 的版本，缺省时默认为 1.4.15
-        plugins: ['AMap.Terrain'],
-      })
-        .then((AMap) => {
-          const map = new AMap.Map("container",{viewMode:"3D",pitch:2,zoom : 6,mapStyle:"amap://styles/macaron"}); 
 
-          const mountains = [
-            {
-              name: "峨眉山",
-              position: [103.339087, 29.5472], //经纬度
-              height: 3079, //海拔高度
-            },
-            {
-              name: "泰山",
-              position: [117.129063, 36.198974],
-              height: 1545,
-            },
-            {
-              name: "华山",
-              position: [110.0954, 34.4998],
-              height: 2154,
-            },
-        ]; //山脉数据数组
-          mountains.forEach
-            (function(mountain){
-            const marker = new AMap.Marker(
-              {
-                position: mountain.position, //设置标记的经纬度位置
-                title: mountain.name, //设置标记的标题
-                height : mountain.height, //设置标记的高度
-              } 
-            );
-            map.add(marker);
-          });
-          // 这两部分代码在吗？
-      }).catch((e) => {
-          console.error(e); //加载错误提示
-        });
-    </script>
-  </body>
+    <!-- 1. 先加载高德地图的 loader -->
+    <script src="https://webapi.amap.com/loader.js"></script>
+    
+    <!-- 2. 再加载我们自己的逻辑脚本 -->
+    <!-- main.js 内部会使用 AMapLoader 来确保地图加载完成后再执行后续操作 -->
+    <script src="main.js"></script> 
+</body>
 </html>
