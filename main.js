@@ -41,7 +41,14 @@ AMapLoader.load({
                     title: `${mountain.name} (海拔: ${mountain.altitude}米)`,
                 });
                 map.add(marker);
-
+                marker.on('click',function(e){
+                    var infocontent = `<h3>${mountain.name}</h3><p>海拔：${mountain.altitude} 米</p>`;
+                    var InfoWindow = new AMap.InfoWindow({
+                        content:infocontent,
+                        anchor: "top-left"
+                    });
+                    InfoWindow.open(map,e.lnglat);
+                })
                 const listItem = document.createElement('li');
                 listItem.textContent = `${mountain.name} - ${mountain.date}`;
                 listItem.onclick = function() {
